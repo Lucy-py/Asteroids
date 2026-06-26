@@ -52,9 +52,10 @@ def main():
                 log_event("player_hit")
                 player.take_damage()
                 player.score_subtract()
+                player.position = pygame.Vector2(x, y)
                 asteroid.split()
                 if not player.alive_check():
-                    print(f"Final score: {player.score}")
+                    print(f"Final score: {int(player.score)}")
                     print("Game over!")
                     sys.exit()
             for shot in shots:

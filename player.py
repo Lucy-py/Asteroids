@@ -9,7 +9,7 @@ class Player(CircleShape):
         
         self.rotation = 0
         self.shot_cooldown = 0
-        self.score = 0
+        self.score =  0
         self.lives = 3
         self.damage_cooldown = 0
         self.color = "green"
@@ -69,10 +69,9 @@ class Player(CircleShape):
         self.score += DEFAULT_POINTS // modifier
 
     def score_subtract(self) -> None:
-        self.score -= DEFAULT_POINTS
+        self.score -= DEFAULT_POINTS / 10
         if self.score < 0:
             self.score = 0
-
 
     def alive_check(self) -> None:
         if self.lives <= 0:
@@ -80,12 +79,12 @@ class Player(CircleShape):
         return True
 
     def take_damage(self) -> None:
+        if self.damage_cooldown <= 0:
+            self.lives -= 1
+            self.damage_cooldown = PLAYER_DAMAGE_COOLDOWN_SECONDS
+            print("Player hit! Lives remaining:", self.lives)
+
         if self.lives == 2:
             self.color = "yellow"
         elif self.lives == 1:
             self.color = "red"
-            
-        if self.damage_cooldown <= 0:
-            self.lives -= 1
-            self.damage_cooldown = PLAYER_DAMAGE_COOLDOWN_SECONDS
-            print("hit")
