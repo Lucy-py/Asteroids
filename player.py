@@ -86,5 +86,7 @@ class Player(CircleShape):
 
         if self.lives == 2:
             self.color = "yellow"
-        elif self.lives == 1:
+        elif self.lives <= 1:
             self.color = "red"
+        else:
+            self.color = "green"
