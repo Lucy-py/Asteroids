@@ -1,6 +1,6 @@
 import pygame
 from circleshape import CircleShape
-from constants import LINE_WIDTH, PLAYER_SHOOT_COOLDOWN_SECONDS, PLAYER_SHOOT_SPEED, PLAYER_SPEED, PLAYER_TURN_SPEED, PLAYER_RADIUS
+from constants import *
 from shot import Shot
 
 class Player(CircleShape):
@@ -10,6 +10,7 @@ class Player(CircleShape):
         self.rotation = 0
         self.shot_cooldown = 0
         self.score = 0
+        self.lives = 3
                 
     def triangle(self) -> list[pygame.Vector2]:
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -60,3 +61,6 @@ class Player(CircleShape):
         if self.shot_cooldown <= 0:
             self.shot_cooldown = PLAYER_SHOOT_COOLDOWN_SECONDS
             return Shot(self.position.x, self.position.y, pygame.Vector2(0, 1).rotate(self.rotation) * PLAYER_SHOOT_SPEED)
+        
+    def score_add(self, modifier: int) -> None:
+        self.score += DEFAULT_POINTS // modifier
