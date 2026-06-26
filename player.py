@@ -11,6 +11,7 @@ class Player(CircleShape):
         self.shot_cooldown = 0
         self.score = 0
         self.lives = 3
+        self.damage_cooldown = 0
                 
     def triangle(self) -> list[pygame.Vector2]:
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -47,6 +48,7 @@ class Player(CircleShape):
             self.shoot()
 
         self.shot_cooldown -= dt
+        self.damage_cooldown -= dt
     
     def move(self, dt: float) -> None:
         keys = pygame.key.get_pressed()
@@ -64,3 +66,20 @@ class Player(CircleShape):
         
     def score_add(self, modifier: int) -> None:
         self.score += DEFAULT_POINTS // modifier
+
+    def score_subtract(self) -> None:
+        self.score -= DEFAULT_POINTS
+        if self.score < 0:
+            self.score = 0
+
+
+    def alive_check(self) -> None:
+        if self.lives <= 0:
+            return False
+        return True
+
+    def take_damage(self) -> None:
+        if self.damage_cooldown <= 0:
+            self.lives -= 1
+            self.damage_cooldown = PLAYER_DAMAGE_COOLDOWN_SECONDS
+            print("hit")
