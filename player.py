@@ -12,6 +12,7 @@ class Player(CircleShape):
         self.score = 0
         self.lives = 3
         self.damage_cooldown = 0
+        self.color = "green"
                 
     def triangle(self) -> list[pygame.Vector2]:
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -24,7 +25,7 @@ class Player(CircleShape):
     def draw(self, screen):
         pygame.draw.polygon(
             screen,
-            "green",
+            self.color,
             self.triangle(),
             LINE_WIDTH,
         )
@@ -79,6 +80,11 @@ class Player(CircleShape):
         return True
 
     def take_damage(self) -> None:
+        if self.lives == 2:
+            self.color = "yellow"
+        elif self.lives == 1:
+            self.color = "red"
+            
         if self.damage_cooldown <= 0:
             self.lives -= 1
             self.damage_cooldown = PLAYER_DAMAGE_COOLDOWN_SECONDS
