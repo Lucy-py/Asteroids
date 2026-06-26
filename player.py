@@ -82,7 +82,8 @@ class Player(CircleShape):
         if self.damage_cooldown <= 0:
             self.lives -= 1
             self.damage_cooldown = PLAYER_DAMAGE_COOLDOWN_SECONDS
-            print("Player hit! Lives remaining:", self.lives)
+            if self.lives > 0:
+                print("Player hit! Lives remaining:", self.lives)
 
         if self.lives == 2:
             self.color = "yellow"
